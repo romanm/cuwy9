@@ -1,0 +1,17 @@
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-03-21 14:53:44
+project --topLevelPackage org.cuwy9 --packaging POM
+module create --moduleName cuwy9-core --topLevelPackage org.cuwy9
+jpa setup --provider ECLIPSELINK --database HYPERSONIC_PERSISTENT --databaseName /home/roman/1d/DB-java/cuwy7
+entity jpa --class ~.domain.Info1 --testAutomatically
+field string --fieldName infoName --sizeMin 1 --notNull
+module focus --moduleName ~
+module create --moduleName cuwy9-web --topLevelPackage org.cuwy9.web
+web mvc setup
+web mvc all --package ~
+web mvc finder all
+web mvc language --code de
+web mvc language --code es
+web flow
+// script --file my.roo
+quit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-03-21 14:54:04
