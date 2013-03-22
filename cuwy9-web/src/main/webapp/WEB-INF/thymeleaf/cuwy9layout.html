@@ -11,7 +11,26 @@
 	<script th:attr="src=@{/resources/js/mopet.js}" type="text/javascript"/>
 </head>
 <body>
-Hello body
-
+	<div th:fragment="headline" >
+		|
+		<span>
+		<a th:text="'home'"
+			th:href="@{/home}"/>
+		</span>
+		<span th:if="${null!=folderT}">
+		&gt; <a th:text="${folderT.mtlO.folder}"
+			th:href="@{${cs}+'/tfolder'+'='+${folderT.id}}"/>
+		</span>
+		<span th:if="${null!=conceptT}">
+		&gt; <a class="conceptContent " 
+			th:text="${conceptT.mtlO.protocol}"
+			th:href="@{${cs}+'/study-sg'+'='+${conceptT.id}}"/>
+		</span>
+		<span th:if="${null!=regimeT}">
+		&gt; <a class="regimeContent " 
+			th:text="${regimeT.taskO.task}"
+			th:href="@{${cs}+'/cere-'+${regimeView}+'='+${regimeT.id}}"/>
+		</span>
+	</div>
 </body>
 </html>

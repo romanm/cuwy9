@@ -1,5 +1,7 @@
 package org.cuwy9.domain;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cuwy9.service.Cuwy7Service;
@@ -29,6 +31,8 @@ public class NodeIntegrationTest {
 		Node fiFolder = cuwy7Service.fiFolder("folder");
 		log.debug(fiFolder);
 		log.debug(fiFolder.getFolder());
+		List<Folder> findAllFolder = Folder.findAllFolder();
+		log.debug(findAllFolder);
 		log.debug(2);
 	}
 

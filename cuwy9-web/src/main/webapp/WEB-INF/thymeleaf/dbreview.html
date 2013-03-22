@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="thymeleaf/cuwy9layout :: headerFragment"/>
+
+<body class="tundra spring">
+<div id="headline" th:include="thymeleaf/cuwy9layout :: headline">rg:headline</div>
+
+<div id="content">
+<div th:each="folderO : ${findAllFolder }" th:text="${folderO}"></div>
+</div>
+<div id="sidebar">sidebar
+</div>
+</body>
+</html>

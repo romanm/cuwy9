@@ -22,7 +22,9 @@ public class Folder extends MtlObject{
 	private String foldername;
 	public String getFoldername() { return foldername; }
 	public void setFoldername(String foldername) { this.foldername = foldername; }
-
+	public static List<Folder> findAllFolder() {
+		return entityManager().createQuery("SELECT o FROM Folder o", Folder.class).getResultList();
+	}
 	@PersistenceContext
 	transient EntityManager entityManager;
 	public static final EntityManager entityManager() {
