@@ -3,6 +3,7 @@ package org.cuwy9.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cuwy9.domain.Node;
+import org.cuwy9.service.Cuwy7Service;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

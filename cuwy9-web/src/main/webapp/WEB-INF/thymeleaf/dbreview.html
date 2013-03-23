@@ -6,7 +6,17 @@
 <div id="headline" th:include="thymeleaf/cuwy9layout :: headline">rg:headline</div>
 
 <div id="content">
-<div th:each="folderO : ${findAllFolder }" th:text="${folderO}"></div>
+	<div th:each="folderO : ${findAllFolder }" th:text="${folderO}"></div>
+	<hr/>
+	<div th:each="taskO : ${findAllTask}" >
+		<h2 th:text="${taskO.taskName}"/>
+		<div th:each="node : ${taskO.node.childs}" >
+			<span th:text="${node.taskDrug.drug.drugname}"/>
+			<span th:text="${node.taskDrug.dose.dosevalue}"/>
+			<span th:text="${node.taskDrug.dose.doseunit}"/>
+			<span th:text="${node.taskDrug.app}"/>
+		</div>
+	</div>
 </div>
 <div id="sidebar">sidebar
 </div>

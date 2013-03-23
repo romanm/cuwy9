@@ -29,11 +29,27 @@ public class NodeIntegrationTest {
 	public void persistFolder() {
 		log.debug(1);
 		Node fiFolder = cuwy7Service.fiFolder("folder");
-		log.debug(fiFolder);
-		log.debug(fiFolder.getFolder());
+		log.debug(fiFolder+"  "+fiFolder.getFolder());
 		List<Folder> findAllFolder = Folder.findAllFolder();
 		log.debug(findAllFolder);
 		log.debug(2);
+		List<Task> findAllTask = Task.findAllTask();
+		for (Task task : findAllTask) {
+			log.debug(task);
+			Node node = task.getNode();
+			log.debug(node);
+			for (Node node2 : node.getChilds()) {
+				TaskDrug taskDrug = node2.getTaskDrug();
+				log.debug(node2+"   "+taskDrug);
+				if(null!=taskDrug)
+				{
+					log.debug(taskDrug.getDrug());
+					log.debug(taskDrug.getDose());
+					log.debug(taskDrug.getApp());
+				}
+			}
+		}
+		log.debug(3);
 	}
 
 //	@Test

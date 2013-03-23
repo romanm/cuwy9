@@ -1,8 +1,12 @@
 package org.cuwy9.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,4 +27,16 @@ public class Task extends MtlObject{
 	public void setTaskName(String taskName) { this.taskName = taskName; }
 	public Task getVariant() { return variant; }
 	public void setVariant(Task variant) { this.variant = variant; }
+	public static List<Task> findAllTask() {
+		return entityManager().createQuery("SELECT o FROM Task o", Task.class).getResultList();
+	}
+	@PersistenceContext
+	transient EntityManager entityManager;
+	public static final EntityManager entityManager() {
+		EntityManager em = new Node().entityManager;
+		if (em == null) throw 
+		new IllegalStateException("Entity manager has not been injected (is the Spring " +
+				"Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
 }

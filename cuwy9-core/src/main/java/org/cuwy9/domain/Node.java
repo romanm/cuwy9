@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cuwy9.reference.DrugType;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,8 +72,10 @@ public class Node {
 	@OneToOne(mappedBy = "node")
 	private App app;
 	public App getApp() {return app;}
-
-
+	@OneToOne(mappedBy = "node")
+	private TaskDrug taskDrug;
+	public TaskDrug getTaskDrug() {return taskDrug;}
+	
 	@PersistenceContext
 	transient EntityManager entityManager;
 	public static final EntityManager entityManager() {

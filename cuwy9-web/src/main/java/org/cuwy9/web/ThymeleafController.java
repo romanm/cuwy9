@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cuwy9.domain.Folder;
+import org.cuwy9.domain.Task;
 import org.cuwy9.service.Cuwy7Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class ThymeleafController {
 		List<Folder> findAllFolder = Folder.findAllFolder();
 		model.addAttribute("findAllFolder",findAllFolder);
 		log.debug(findAllFolder);
+		List<Task> findAllTask = Task.findAllTask();
+		log.debug(findAllTask);
+		model.addAttribute("findAllTask",findAllTask);
 		log.debug(2);
 		return "thymeleaf/dbreview";
 	}
