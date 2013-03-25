@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,10 +14,12 @@ import org.cuwy9.domain.Dose;
 import org.cuwy9.domain.Drug;
 import org.cuwy9.domain.Folder;
 import org.cuwy9.domain.Node;
+import org.cuwy9.domain.Patient;
 import org.cuwy9.domain.Task;
 import org.cuwy9.domain.TaskDrug;
 import org.cuwy9.reference.DoseProType;
 import org.cuwy9.reference.DoseType;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,6 +87,49 @@ public class Cuwy7Service {
 		em.persist(task);
 		log.debug("task = "+task+" node = "+node);
 		return node;
+	}
+	// --------drug--------------------
+	@Transactional
+	protected Node fiPatient(String familyName, String personalName, String sex, DateTime birthdate) {
+		Patient patient =findPatient(familyName, personalName, sex, birthdate);
+		Node patientN;
+		if(null==patient)
+			patientN=insertPatient(familyName, personalName, sex, birthdate);
+		else
+			patientN=patient.getNode();
+		return patientN;
+	}
+	private Node insertPatient(String familyName, String personalName,
+			String sex, DateTime birthdate) {
+		Node node = persistNode();
+		log.debug(node);
+		Patient patient = new Patient();
+		patient.setId(node.getId());
+		patient.setNode(node);
+		patient.setFamilyName(familyName);
+		patient.setPersonalName(personalName);
+		patient.setSex(sex);
+		patient.setBirthdate(birthdate);
+		log.debug(patient);
+		em.persist(patient);
+		log.debug(patient);
+		return node;
+	}
+	private Patient findPatient(String familyName, String personalName,
+			String sex, DateTime birthdate) {
+		Query q = em.createQuery("SELECT o FROM Patient o WHERE " +
+				" o.familyName=:familyName " +
+				" AND o.personalName=:personalName " +
+				" AND o.sex=:sex " +
+				" AND o.birthdate=:birthdate "
+				);
+		q.setParameter("familyName", familyName);
+		q.setParameter("personalName", personalName);
+		q.setParameter("sex", sex);
+		q.setParameter("birthdate", birthdate);
+		List<Patient> resultList = q.getResultList();
+		log.debug("resultList = "+resultList);
+		return resultList.size()>0?resultList.get(0):null;
 	}
 	// --------drug--------------------
 	@Transactional

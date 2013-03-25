@@ -75,6 +75,9 @@ public class Node {
 	@OneToOne(mappedBy = "node")
 	private TaskDrug taskDrug;
 	public TaskDrug getTaskDrug() {return taskDrug;}
+	@OneToOne(mappedBy = "node")
+	private Patient patient;	
+	public Patient getPatient() {return patient;}
 	
 	@PersistenceContext
 	transient EntityManager entityManager;
