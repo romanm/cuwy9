@@ -1,7 +1,11 @@
 package org.cuwy9.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,4 +41,17 @@ public class Patient extends MtlObject{
 	public String getFamilyName() { return familyName; }
 	public void setFamilyName(String familyName) { this.familyName = familyName; }
 	
+	public static List<Patient> findAllPatient() {
+		return entityManager().createQuery("SELECT o FROM Patient o", Patient.class).getResultList();
+	}
+	@PersistenceContext
+	transient EntityManager entityManager;
+	public static final EntityManager entityManager() {
+		EntityManager em = new Node().entityManager;
+		if (em == null) throw 
+		new IllegalStateException("Entity manager has not been injected (is the Spring " +
+				"Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
 }

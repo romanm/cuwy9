@@ -17,6 +17,10 @@
 			<span th:text="${node.taskDrug.app}"/>
 		</div>
 	</div>
+	<hr/>
+	<div th:each="patientO : ${findAllPatient}" >
+		<h2 th:text="${patientO}"/>
+	</div>
 </div>
 <div id="sidebar">sidebar
 </div>
