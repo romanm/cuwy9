@@ -12,6 +12,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Task extends MtlObject{
+	private Task() {}
+	public Task(Node node) {
+		setNode(node);
+	}
 	@Override
 	public String toString() {
 		return "task="+getId()+"::taskName="+taskName;

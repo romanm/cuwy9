@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 @Entity
 public class Drug extends MtlObject{
+	private Drug() {}
+	public Drug(Node node) {
+		setNode(node);
+	}
 	@Override
 	public String toString() {
 		return "drug::"+getId()+"::drugname="+drugname+"::generic="+(null==getGeneric()?null:getGeneric().getId());

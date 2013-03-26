@@ -15,6 +15,10 @@ import org.joda.time.DateTime;
 
 @Entity
 public class Patient extends MtlObject{
+	private Patient() {}
+	public Patient(Node node) {
+		setNode(node);
+	}
 	@Override
 	public String toString() {
 		return "patient="+getId()+"::"+personalName+", "+familyName
@@ -27,6 +31,7 @@ public class Patient extends MtlObject{
 	@NotNull
 	@Size(min = 1, max=1)
 	private String sex;
+	
 	@Column(columnDefinition = "TIMESTAMP")
 	@Converter(name = "dateTimeConverter", converterClass = org.cuwy9.reference.JodaDateTimeConverter.class)
 	@Convert("dateTimeConverter")

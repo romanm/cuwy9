@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,10 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Configurable
-public class Cuwy7Service {
+public class Cuwy9Service {
 	protected final Log log = LogFactory.getLog(getClass());
 	public static String genericName = "superPill1";
-	public EntityManager getEm() {return em;}
+//	public EntityManager getEm() {return em;}
 	private EntityManager em;
 	@PersistenceContext
 	public void setEntityManager(EntityManager em) {this.em = em;}
@@ -41,23 +40,28 @@ public class Cuwy7Service {
 		List<Node> childs = taskN.getChilds();
 		log.debug(taskN+"--"+taskN.getTask()+" childs="+childs);
 		if(null==childs||childs.size()==0){
-			Drug drug = fiDrug(Cuwy7Service.genericName ).getDrug();
-			Dose dose = fiDose(1, "mg", DoseProType.Once, DoseType.Definition).getDose();
-			App app = fiApp(1, "").getApp();
+			Node fiDrug = fiDrug(Cuwy9Service.genericName );
+			log.debug(fiDrug);
+			Drug drug = fiDrug.getDrug();
+			log.debug(drug);
+			Node fiDose = fiDose(1, "mg", DoseProType.Once, DoseType.Definition);
+			log.debug(fiDose);
+			Dose dose = fiDose.getDose();
+			log.debug(dose);
+			Node fiApp = fiApp(1, "");
+			log.debug("fiApp = "+fiApp);
+			App app = fiApp.getApp();
 			log.debug("app = "+app);
+			Node fiTaskdrug = fiTaskDrug2(drug, dose, app);
 			Node taskDrugN = persistNode();
 			taskDrugN.setDad(taskN);
-			TaskDrug taskDrug = new TaskDrug();
-			taskDrug.setId(taskDrugN.getId());
-			taskDrug.setDrug(drug);
-			taskDrug.setDose(dose);
-			taskDrug.setApp(app);
-			em.persist(taskDrug);
+			taskDrugN.setLink(fiTaskdrug);
 		}else{
 			log.debug(childs.size());
 		}
 		return taskN;
 	}
+	
 	@Transactional
 	protected Node fiRegime(String regimeName) {
 		log.debug("fiRegime::drugName = "+regimeName);
@@ -80,9 +84,9 @@ public class Cuwy7Service {
 	}
 	private Node insertRegime(String regimeName){
 		Node node = persistNode();
-		Task task = new Task();
-		task.setNode(node);
-		task.setId(node.getId());
+		Task task = new Task(node);
+//		task.setNode(node);
+//		task.setId(node.getId());
 		task.setTaskName(regimeName);
 		em.persist(task);
 		log.debug("task = "+task+" node = "+node);
@@ -103,9 +107,9 @@ public class Cuwy7Service {
 			String sex, DateTime birthdate) {
 		Node node = persistNode();
 		log.debug(node);
-		Patient patient = new Patient();
-		patient.setId(node.getId());
-		patient.setNode(node);
+		Patient patient = new Patient(node);
+//		patient.setId(node.getId());
+//		patient.setNode(node);
 		patient.setFamilyName(familyName);
 		patient.setPersonalName(personalName);
 		patient.setSex(sex);
@@ -136,12 +140,14 @@ public class Cuwy7Service {
 	protected Node fiDrug(String drugName) {
 		log.debug("fiDrug::drugName = "+drugName);
 		Drug drug = findDrug(drugName);
-		System.out.println("fiDrug::drug = "+drug);
+		log.debug("fiDrug::drug = "+drug);
 		Node drugN;
 		if(null==drug)
 			drugN=insertDrug(drugName);
-		else
+		else{
+			log.debug(drug.getNode());
 			drugN=drug.getNode();
+		}
 		return drugN;
 	}
 	protected Drug findDrug(String drugName) {
@@ -154,8 +160,8 @@ public class Cuwy7Service {
 	}
 	private Node insertDrug(String drugName){
 		Node node = persistNode();
-		Drug drug = new Drug();
-		drug.setId(node.getId());
+		Drug drug = new Drug(node);
+//		drug.setId(node.getId());
 		drug.setDrugname(drugName);
 		em.persist(drug);
 		System.out.println("insertDrug = "+drug);
@@ -163,13 +169,52 @@ public class Cuwy7Service {
 		System.out.println("node = "+node.getDrug());
 		return node;
 	}
-	// --------dose------------------
+	// --------taskdrug------------------
+	@Transactional 
+	public Node fiTaskDrug(Drug drug, Dose dose, App app) {
+		return fiTaskDrug2(drug, dose, app);
+	}
+	private Node fiTaskDrug2(Drug drug, Dose dose, App app) {
+		Node taskDrugN;
+		TaskDrug taskDrug = findTaskDrug(drug,dose,app);
+		log.debug(taskDrug);
+		if(null==taskDrug)
+			taskDrugN=insertTaskDrug(drug,dose,app);
+		else 
+			taskDrugN=taskDrug.getNode();
+		return taskDrugN;
+	}
+	private Node insertTaskDrug(Drug drug, Dose dose, App app) {
+		Node node = persistNode();
+		TaskDrug taskDrug = new TaskDrug(node);
+//		taskDrug.setId(node.getId());
+//		taskDrug.setNode(node);
+		taskDrug.setDrug(drug);
+		taskDrug.setDose(dose);
+		taskDrug.setApp(app);
+		log.debug(taskDrug);
+		em.persist(taskDrug);
+		log.debug(taskDrug);
+		return node;
+	}
+	private TaskDrug findTaskDrug(Drug drug, Dose dose, App app) {
+		Query q = em.createQuery(" SELECT o FROM TaskDrug o " 
+				+" WHERE o.drug=:drug "
+				+" AND o.dose=:dose "
+				+" AND o.app=:app "
+				);
+		q.setParameter("drug", drug);
+		q.setParameter("dose", dose);
+		q.setParameter("app", app);
+		List<TaskDrug> resultList = q.getResultList();
+		return resultList.size()>0?resultList.get(0):null;
+	}
+	// --------app------------------
 	@Transactional
 	protected Node fiApp(Integer msinfusion, String unit) {
+		Node appN;
 		App app = findApp(msinfusion,unit);
 		log.debug(app);
-		log.debug(app.getNode());
-		Node appN;
 		if(null==app)
 			appN=insertApp(msinfusion,unit);
 		else 
@@ -178,9 +223,9 @@ public class Cuwy7Service {
 	}
 	private Node insertApp(Integer msinfusion, String unit) {
 		Node node = persistNode();
-		App app = new App();
-		app.setId(node.getId());
-		app.setNode(node);
+		App app = new App(node);
+//		app.setId(node.getId());
+//		app.setNode(node);
 		app.setMsinfusion(msinfusion);
 		app.setUnit(unit);
 		log.debug(app);
@@ -211,8 +256,7 @@ public class Cuwy7Service {
 	}
 	private Node insertDose(double dosevalue, String doseunit, DoseProType doseProType, DoseType doseType) {
 		Node node = persistNode();
-		Dose dose = new Dose();
-		dose.setId(node.getId());
+		Dose dose = new Dose(node);
 		dose.setDosevalue(dosevalue);
 		dose.setDoseunit(doseunit);
 		dose.setDoseType(doseType);
@@ -251,9 +295,9 @@ public class Cuwy7Service {
 		return node;
 	}
 	private void insertFolder(String folderName, Node node) {
-		Folder folder = new Folder();
-		folder.setId(node.getId());
-		folder.setNode(node);
+		Folder folder = new Folder(node);
+//		folder.setId(node.getId());
+//		folder.setNode(node);
 		folder.setFoldername(folderName);
 		em.persist(folder);
 	}
@@ -279,8 +323,8 @@ public class Cuwy7Service {
 	private Node insertFolder3( String folderName) {
 		Node node = Node.persistNode();
 		System.out.println(node);
-		Folder folder = new Folder();
-		folder.setId(node.getId());
+		Folder folder = new Folder(node);
+//		folder.setId(node.getId());
 		folder.setFoldername(folderName);
 		System.out.println(folder);
 		folder.persist();

@@ -13,10 +13,14 @@ public abstract class MtlObject {
 	@Id
 	private Long id;
 	public Long getId() {return id;}
-	public void setId(Long id) {this.id = id;}
+//	public void setId(Long id) {this.id = id;}
 	@OneToOne
 	@JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
 	private Node node;
-	public void setNode(Node node) {this.node = node;}
+	protected void setNode(Node node) {
+		this.node = node;
+		id=node.getId();
+		node.setMtlObject(this);
+	}
 	public Node getNode() {return node;}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cuwy9.service.Cuwy7Service;
+import org.cuwy9.service.Cuwy9Service;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ public class NodeIntegrationTest {
 	@Autowired
 	NodeDataOnDemand dod;
 	@Autowired
-	Cuwy7Service cuwy7Service;
+	Cuwy9Service cuwy7Service;
 	
 	@Test
 	public void persistFolder() {

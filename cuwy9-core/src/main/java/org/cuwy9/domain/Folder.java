@@ -13,6 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 public class Folder extends MtlObject{
+	private Folder() {}
+	public Folder(Node node) {
+		setNode(node);
+	}
 	@Override
 	public String toString() {
 		return "folder="+getId()+"::foldername="+foldername;

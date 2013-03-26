@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.cuwy9.domain.Folder;
 import org.cuwy9.domain.Patient;
 import org.cuwy9.domain.Task;
-import org.cuwy9.service.Cuwy7Service;
+import org.cuwy9.service.Cuwy9Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ThymeleafController {
 	protected final Log log = LogFactory.getLog(getClass());
 	@Autowired
-	Cuwy7Service cuwy7Service;
+	Cuwy9Service cuwy7Service;
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {

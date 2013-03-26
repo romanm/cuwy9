@@ -17,7 +17,9 @@ import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cuwy9.reference.DrugType;
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.Converter;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +53,13 @@ public class Node {
 	private List<Node> childs; 
 	public List<Node> getChilds() { return childs; } 
 	public void setChilds(List<Node> childs) { this.childs = childs; }
+	
+	@Column(columnDefinition = "TIMESTAMP")
+	@Converter(name = "dateTimeConverter", converterClass = org.cuwy9.reference.JodaDateTimeConverter.class)
+	@Convert("dateTimeConverter")
+	private DateTime sort = new DateTime(); 
+	public DateTime getSort() { return sort; }
+	public void setSort(DateTime sort) { this.sort = sort; }
 	@ManyToOne
 	@JoinColumn(name="link_id")
 	private Node link; 
@@ -120,5 +129,13 @@ public class Node {
 //			node.setLink(node);
 			node.log.debug("persistNode=="+node);
 			return node;
+	}
+	public void setMtlObject(MtlObject mtlObject) {
+			if(mtlObject instanceof App)		app=(App) mtlObject;
+		else if(mtlObject instanceof Dose)		dose=(Dose) mtlObject;
+		else if(mtlObject instanceof Drug)		drug=(Drug) mtlObject;
+		else if(mtlObject instanceof Folder)	folder=(Folder) mtlObject;
+		else if(mtlObject instanceof TaskDrug)	taskDrug=(TaskDrug) mtlObject;
+		else if(mtlObject instanceof Task)		task=(Task) mtlObject;
 	}
 }

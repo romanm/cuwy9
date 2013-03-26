@@ -9,6 +9,18 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 @Entity
 public class TaskDrug extends MtlObject{
+	private TaskDrug() {}
+	public TaskDrug(Node node) {
+		setNode(node);
+	}
+	@Override
+	public String toString() {
+		return "taskDrug="+getId()
+				+"::drug="+drug
+				+"::dose="+dose
+				+"::app="+app
+				;
+	}
 	@NotNull
 	@ManyToOne
 	private Drug drug;

@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 @Entity
 public class App extends MtlObject{
+	private App() {}
+	public App(Node node) {
+		setNode(node);
+	}
 	@Override
 	public String toString() {
 		return "app::"+getId()

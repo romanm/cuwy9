@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 @Entity
 public class Dose  extends MtlObject{
+	private Dose(){};
+	public Dose(Node node){
+		setNode(node);
+	};
 	@Override
 	public String toString() {
 		return "dose::"+getId()
