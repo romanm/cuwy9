@@ -15,8 +15,9 @@
         <spring.version>3.2.2.RELEASE</spring.version>
     </properties>
     <modules>
-        <module>cuwy9-core</module>
-    <module>cuwy9-web</module>
+		<module>cuwy9-core</module>
+		<module>cuwy9-web</module>
+		<module>cuwy9-pivot</module>
     </modules>
     <repositories>
         <repository>
