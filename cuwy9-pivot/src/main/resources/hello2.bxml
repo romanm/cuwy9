@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Window title="Labels" maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns="org.apache.pivot.wtk">
+	<BoxPane styles="{padding:4, verticalAlignment:'center'}">
+		<ImageView image="/battery.png" />
+		<Label text="What time is it?" />
+	</BoxPane>
+</Window>
