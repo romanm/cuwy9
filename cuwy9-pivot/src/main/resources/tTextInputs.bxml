@@ -1,0 +1,9 @@
+<text:TextInputs title="Text Inputs" maximized="true"
+	xmlns:bxml="http://pivot.apache.org/bxml" 
+	xmlns:text="org.cuwy9.pivot"
+	xmlns="org.apache.pivot.wtk">
+	<BoxPane styles="{padding:4, verticalAlignment:'center'}">
+		<Label text="State:" />
+		<TextInput bxml:id="stateTextInput" />
+	</BoxPane>
+</text:TextInputs>

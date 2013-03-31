@@ -1,0 +1,13 @@
+<text:SuggestionPopups title="Suggestion Popups"
+	maximized="true" xmlns:bxml="http://pivot.apache.org/bxml" 
+	xmlns:text="org.cuwy9.pivot"
+	xmlns="org.apache.pivot.wtk">
+	<Border>
+		<BoxPane orientation="vertical" styles="{padding:4, verticalAlignment:'top'}">
+			<BoxPane styles="{verticalAlignment:'center'}">
+				<Label text="State:" />
+				<TextInput bxml:id="stateTextInput" />
+			</BoxPane>
+		</BoxPane>
+	</Border>
+</text:SuggestionPopups>

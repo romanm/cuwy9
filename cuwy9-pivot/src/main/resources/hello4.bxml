@@ -1,0 +1,97 @@
+<Window title="Expanders" maximized="true"
+	xmlns:bxml="http://pivot.apache.org/bxml" 
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns="org.apache.pivot.wtk">
+	<SplitPane>
+		<left>
+			<Border>
+	<TabPane selectedIndex="0" styles="{tabOrientation:'horizontal'}">
+		<Label text="Basic"
+			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+			<TabPane.tabData>
+				<content:ButtonData  text="Task" />
+			</TabPane.tabData>
+		</Label>
+
+		<Label text="Basic"
+			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+			<TabPane.tabData>
+				<content:ButtonData  text="Day" />
+			</TabPane.tabData>
+		</Label>
+
+		<Label text="Basic"
+			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+			<TabPane.tabData>
+				<content:ButtonData  text="Week" />
+			</TabPane.tabData>
+		</Label>
+		<Label text="Basic"
+			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+			<TabPane.tabData>
+				<content:ButtonData  text="Hour" />
+			</TabPane.tabData>
+		</Label>
+	</TabPane>
+</Border>
+		</left>
+		<right>
+			<Border>
+				<ScrollPane horizontalScrollBarPolicy="fill">
+				<!-- 
+					<BoxPane orientation="vertical"
+						styles="{fill:true, padding:{left:2, right:2}}">
+						<Expander bxml:id="drugExpander" title="Drug">
+							<Label text="Hello BXML!"
+								styles="{font:'Arial bold 24', color:'#ff0000',
+		horizontalAlignment:'center', verticalAlignment:'center'}" />
+						</Expander>
+						<Expander bxml:id="doseExpander" title="dose"
+							expanded="false">
+							<Label text="Hello weather Expander!" />
+						</Expander>
+						<Expander bxml:id="appExpander" title="app"
+							expanded="false">
+							<Label text="Hello weather Expander!" />
+						</Expander>
+						<Expander bxml:id="datetimeExpander" title="DateTime Calendar"
+							expanded="false">
+							<Calendar />
+						</Expander>
+					</BoxPane>
+				 -->
+					<BoxPane orientation="vertical" 
+						styles="{fill:true, padding:{left:2, right:2}}"
+					>
+						<Label text="Accordion" styles="{font:{bold:true}}" />
+						<Accordion >
+							<BoxPane Accordion.headerData="Drug">
+								<Label  text="drug"/>
+								<PushButton buttonData="Next">
+								<buttonPressListeners>
+                function buttonPressed(button) {
+                    var accordion = button.getAncestor("org.apache.pivot.wtk.Accordion");
+                    accordion.selectedIndex += 1;
+                }
+                </buttonPressListeners>
+								
+								</PushButton>
+							</BoxPane>
+							<BoxPane Accordion.headerData="dose">
+								<Label  text="dose"/>
+							</BoxPane>
+							<BoxPane Accordion.headerData="app">
+								<Label  text="app"/>
+							</BoxPane>
+							<BoxPane Accordion.headerData="DateTime"
+							>
+								<Label text="DateTime"/>
+								<Calendar />
+							</BoxPane>
+						</Accordion>
+					</BoxPane>
+				</ScrollPane>
+			</Border>
+		</right>
+	</SplitPane>
+</Window>

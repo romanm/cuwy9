@@ -1,0 +1,42 @@
+<layout:SimpleTablePanes bxml:id="window" title="Table Panes"
+	maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:layout="org.cuwy9.pivot.layout" 
+	xmlns="org.apache.pivot.wtk">
+	<Border>
+		<TablePane bxml:id="tablePane"
+			styles="{verticalSpacing:1, showHorizontalGridLines:true,
+				horizontalSpacing:1, showVerticalGridLines:true}">
+			<columns>
+				<TablePane.Column width="-1" />
+				<TablePane.Column width="50" />
+				<TablePane.Column width="-1" />
+				<TablePane.Column width="1*" />
+				<TablePane.Column width="2*" />
+			</columns>
+
+			<TablePane.Row height="-1">
+				<TablePane.Filler />
+				<Label text="50" styles="{horizontalAlignment:'center'}" />
+				<Label text="-1" styles="{horizontalAlignment:'center'}" />
+				<Label text="1*" styles="{horizontalAlignment:'center'}" />
+				<Label text="2*" styles="{horizontalAlignment:'center'}" />
+			</TablePane.Row>
+
+			<TablePane.Row height="50">
+				<Label text="50" styles="{verticalAlignment:'center'}" />
+			</TablePane.Row>
+
+			<TablePane.Row height="-1">
+				<Label text="-1" styles="{verticalAlignment:'center'}" />
+			</TablePane.Row>
+
+			<TablePane.Row height="1*">
+				<Label text="1*" styles="{verticalAlignment:'center'}" />
+			</TablePane.Row>
+
+			<TablePane.Row height="2*">
+				<Label text="2*" styles="{verticalAlignment:'center'}" />
+			</TablePane.Row>
+		</TablePane>
+	</Border>
+</layout:SimpleTablePanes>
