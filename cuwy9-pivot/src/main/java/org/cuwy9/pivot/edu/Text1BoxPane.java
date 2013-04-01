@@ -1,4 +1,4 @@
-package org.cuwy9.pivot;
+package org.cuwy9.pivot.edu;
 
 import java.net.URL;
 
@@ -8,22 +8,23 @@ import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
-import org.apache.pivot.wtk.Display;
+import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.SuggestionPopup;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
-import org.apache.pivot.wtk.Window;
 
-public class SuggestionPopups extends Window implements Bindable {
+public class Text1BoxPane extends BoxPane implements Bindable{
 	protected final Log log = LogFactory.getLog(getClass());
 	private TextInput stateTextInput = null;
-
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		log.debug(1);
+		init(namespace);
+	}
+	private void init(Map<String, Object> namespace) {
 		stateTextInput = (TextInput)namespace.get("stateTextInput");
-		TextInputContentListener.Adapter adapter = new TextInputContentListener.Adapter() {
+		stateTextInput.getTextInputContentListeners().add(new TextInputContentListener.Adapter() {
 			public void textInserted(TextInput textInput, int index, int count) {
 				log.debug(2);
 				String text = textInput.getText();
@@ -44,18 +45,11 @@ public class SuggestionPopups extends Window implements Bindable {
 			public void textRemoved(TextInput textInput, int index, int count) {
 				suggestionPopup.close();
 			}
-		};
-		stateTextInput.getTextInputContentListeners().add(adapter);
+		});
 
 		suggestionPopup.setListSize(4);
 	}
-
-	public void open(Display display, Window owner) {
-		super.open(display, owner);
-		stateTextInput.requestFocus();
-	}
-
-	public SuggestionPopups() {
+	public Text1BoxPane() {
 		log.debug(3);
 		// Populate the lookup values, ensuring that they are sorted
 		states = new ArrayList<String>();

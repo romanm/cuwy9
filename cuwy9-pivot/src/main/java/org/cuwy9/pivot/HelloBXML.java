@@ -11,13 +11,14 @@ public class HelloBXML implements Application {
 	//	String bxml = "/hello2.bxml";
 	//	String bxml = "/hello.bxml";
 //		String bxml = "/hello3.bxml";
-		String bxml = "/hello4.bxml";
 	//	String bxml = "/pushButton.bxml";
 	//	String bxml = "/lListViews.bxml";
 	//	String bxml = "/tTextInputs.bxml";
-//	String bxml = "/tSuggestionPopups.bxml";
 //	String bxml = "/layoutSimpleTablePanes.bxml";
 //	String bxml = "/layoutForms.bxml";
+//	String bxml = "/tSuggestionPopups.bxml";
+//	String bxml = "/hello5.bxml";
+	String bxml = "/hello4.bxml";
 	private Window window = null;
 	public static void main(String[] args) {
 		DesktopApplicationContext.main(HelloBXML.class, args);

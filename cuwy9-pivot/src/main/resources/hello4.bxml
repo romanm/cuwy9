@@ -1,6 +1,7 @@
-<Window title="Expanders" maximized="true"
+<cuwy:RegimeEditor title="Expanders" maximized="true"
 	xmlns:bxml="http://pivot.apache.org/bxml" 
 	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:cuwy="org.cuwy9.pivot"
 	xmlns="org.apache.pivot.wtk">
 	<SplitPane>
 		<left>
@@ -9,7 +10,7 @@
 		<Label text="Basic"
 			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
 			<TabPane.tabData>
-				<content:ButtonData  text="Task" />
+				<content:ButtonData text="Task" />
 			</TabPane.tabData>
 		</Label>
 
@@ -66,15 +67,15 @@
 						<Label text="Accordion" styles="{font:{bold:true}}" />
 						<Accordion >
 							<BoxPane Accordion.headerData="Drug">
-								<Label  text="drug"/>
+								<Label  text="Drug:"/>
+								<TextInput bxml:id="drugTextInput" />
 								<PushButton buttonData="Next">
-								<buttonPressListeners>
-                function buttonPressed(button) {
-                    var accordion = button.getAncestor("org.apache.pivot.wtk.Accordion");
-                    accordion.selectedIndex += 1;
-                }
-                </buttonPressListeners>
-								
+									<buttonPressListeners>
+										function buttonPressed(button) {
+										var accordion = button.getAncestor("org.apache.pivot.wtk.Accordion");
+										accordion.selectedIndex += 1;
+										}
+									</buttonPressListeners>
 								</PushButton>
 							</BoxPane>
 							<BoxPane Accordion.headerData="dose">
@@ -83,8 +84,7 @@
 							<BoxPane Accordion.headerData="app">
 								<Label  text="app"/>
 							</BoxPane>
-							<BoxPane Accordion.headerData="DateTime"
-							>
+							<BoxPane Accordion.headerData="DateTime">
 								<Label text="DateTime"/>
 								<Calendar />
 							</BoxPane>
@@ -94,4 +94,4 @@
 			</Border>
 		</right>
 	</SplitPane>
-</Window>
+</cuwy:RegimeEditor>

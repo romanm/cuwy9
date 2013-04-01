@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Window title="Labels" maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:text="org.cuwy9.pivot.edu"
+	xmlns="org.apache.pivot.wtk">
+	<text:Text1BoxPane styles="{padding:4, verticalAlignment:'center'}">
+		<Label text="State:" />
+		<TextInput bxml:id="stateTextInput" />
+	</text:Text1BoxPane>
+</Window>

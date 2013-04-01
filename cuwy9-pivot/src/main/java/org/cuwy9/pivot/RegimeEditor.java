@@ -14,15 +14,15 @@ import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.Window;
 
-public class SuggestionPopups extends Window implements Bindable {
+public class RegimeEditor  extends Window implements Bindable {
 	protected final Log log = LogFactory.getLog(getClass());
-	private TextInput stateTextInput = null;
+	private TextInput drugTextInput = null;
 
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		log.debug(1);
-		stateTextInput = (TextInput)namespace.get("stateTextInput");
+		drugTextInput = (TextInput)namespace.get("drugTextInput");
 		TextInputContentListener.Adapter adapter = new TextInputContentListener.Adapter() {
 			public void textInserted(TextInput textInput, int index, int count) {
 				log.debug(2);
@@ -45,17 +45,15 @@ public class SuggestionPopups extends Window implements Bindable {
 				suggestionPopup.close();
 			}
 		};
-		stateTextInput.getTextInputContentListeners().add(adapter);
+		drugTextInput.getTextInputContentListeners().add(adapter);
 
 		suggestionPopup.setListSize(4);
 	}
-
 	public void open(Display display, Window owner) {
 		super.open(display, owner);
-		stateTextInput.requestFocus();
+		drugTextInput.requestFocus();
 	}
-
-	public SuggestionPopups() {
+	public RegimeEditor(){
 		log.debug(3);
 		// Populate the lookup values, ensuring that they are sorted
 		states = new ArrayList<String>();
