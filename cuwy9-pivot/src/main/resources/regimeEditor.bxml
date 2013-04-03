@@ -7,12 +7,42 @@
 		<left>
 			<Border>
 	<TabPane selectedIndex="0" styles="{tabOrientation:'horizontal'}">
-		<Label text="Basic"
-			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+		<corner>
+			<!-- 
+			<BoxPane bxml:id="cornerBoxPane" styles="{horizontalAlignment:'right'}">
+				<TextInput textSize="10" />
+			</BoxPane>
+			 -->
+			<BoxPane bxml:id="corner2BoxPane" styles="{horizontalAlignment:'left'}">
+				<Label text="View:"/>
+			</BoxPane>
+		</corner>
+	
+		<BoxPane>
 			<TabPane.tabData>
 				<content:ButtonData text="Task" />
 			</TabPane.tabData>
-		</Label>
+			<Border styles="{padding:2}">
+				<ScrollPane bxml:id="sortableScrollPane">
+					<TableView bxml:id="sortableTableView" >
+						<columns>
+							<TableView.Column name="i" width="48" />
+							<TableView.Column name="a" width="48" />
+							<TableView.Column name="b" width="48" />
+							<TableView.Column name="c" width="48" />
+							<TableView.Column name="d" width="48" />
+							<TableView.Column name="e" width="1*" />
+						</columns>
+					</TableView>
+				<!-- 
+				 -->
+					<columnHeader>
+						<TableViewHeader tableView="$sortableTableView"
+							sortMode="multi_column" tooltipText="Shift-click to sort on multiple columns" />
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</BoxPane>
 
 		<Label text="Basic"
 			styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
@@ -39,28 +69,6 @@
 		<right>
 			<Border>
 				<ScrollPane horizontalScrollBarPolicy="fill">
-				<!-- 
-					<BoxPane orientation="vertical"
-						styles="{fill:true, padding:{left:2, right:2}}">
-						<Expander bxml:id="drugExpander" title="Drug">
-							<Label text="Hello BXML!"
-								styles="{font:'Arial bold 24', color:'#ff0000',
-		horizontalAlignment:'center', verticalAlignment:'center'}" />
-						</Expander>
-						<Expander bxml:id="doseExpander" title="dose"
-							expanded="false">
-							<Label text="Hello weather Expander!" />
-						</Expander>
-						<Expander bxml:id="appExpander" title="app"
-							expanded="false">
-							<Label text="Hello weather Expander!" />
-						</Expander>
-						<Expander bxml:id="datetimeExpander" title="DateTime Calendar"
-							expanded="false">
-							<Calendar />
-						</Expander>
-					</BoxPane>
-				 -->
 					<BoxPane orientation="vertical" 
 						styles="{fill:true, padding:{left:2, right:2}}"
 					>

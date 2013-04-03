@@ -6,23 +6,34 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Display;
+import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.SuggestionPopup;
+import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableViewRowListener;
+import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.Window;
+import org.apache.pivot.wtk.content.TableViewHeaderData;
 
 public class RegimeEditor  extends Window implements Bindable {
 	protected final Log log = LogFactory.getLog(getClass());
 	private TextInput drugTextInput = null;
+	TableView sortableTableView = null;
 
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		log.debug(1);
 		drugTextInput = (TextInput)namespace.get("drugTextInput");
+		
+		initTableView(namespace);
+
 		TextInputContentListener.Adapter adapter = new TextInputContentListener.Adapter() {
 			public void textInserted(TextInput textInput, int index, int count) {
 				log.debug(2);
@@ -48,6 +59,73 @@ public class RegimeEditor  extends Window implements Bindable {
 		drugTextInput.getTextInputContentListeners().add(adapter);
 
 		suggestionPopup.setListSize(4);
+	}
+	private void initTableView(Map<String, Object> namespace) {
+		sortableTableView = (TableView)namespace.get("sortableTableView");
+		TableViewSelectionListener listener=new TableViewSelectionListener(){
+
+			public void selectedRangeAdded(TableView tableView, int rangeStart,
+					int rangeEnd) {
+				log.debug(1);
+			}
+
+			public void selectedRangeRemoved(TableView tableView,
+					int rangeStart, int rangeEnd) {
+				log.debug(1);
+			}
+
+			public void selectedRangesChanged(TableView tableView,
+					Sequence<Span> previousSelectedRanges) {
+				log.debug(1);
+			}
+
+			public void selectedRowChanged(TableView tableView,
+					Object previousSelectedRow) {
+				HashMap<String, String> selectedRow = (HashMap<String, String>) tableView.getSelectedRow();
+				String drug = selectedRow.get("a");
+				drugTextInput.setText(drug);
+			}};
+		sortableTableView.getTableViewSelectionListeners().add(listener);
+		sortableTableView.getTableViewRowListeners().add(new TableViewRowListener(){
+
+			public void rowInserted(TableView tableView, int index) {
+				log.debug(1);
+			}
+
+			public void rowsRemoved(TableView tableView, int index, int count) {
+				log.debug(1);
+			}
+
+			public void rowUpdated(TableView tableView, int index) {
+				log.debug(1);
+			}
+
+			public void rowsCleared(TableView tableView) {
+				log.debug(1);
+			}
+
+			public void rowsSorted(TableView tableView) {
+				log.debug(1);
+			}} );
+		// Set table header data
+		TableView.ColumnSequence columns = this.sortableTableView.getColumns();
+		columns.get(0).setHeaderData(new TableViewHeaderData("#"));
+		columns.get(1).setHeaderData(new TableViewHeaderData("drug"));
+		columns.get(2).setHeaderData(new TableViewHeaderData("dose"));
+		columns.get(3).setHeaderData(new TableViewHeaderData("C"));
+		columns.get(4).setHeaderData(new TableViewHeaderData("D"));
+		ArrayList<Object> tableData = new ArrayList<Object>(10);
+
+		addDrug(tableData, "Dexa", "2 mg");
+		addDrug(tableData, "NaCl 0.9%", "250 ml");
+		this.sortableTableView.setTableData(tableData);
+
+	}
+	private void addDrug(ArrayList<Object> tableData, String drug, String dose) {
+		HashMap<String, String> tableRow = new HashMap<String, String>();
+		tableRow.put("a", drug);
+		tableRow.put("b", dose);
+		tableData.add(tableRow);
 	}
 	public void open(Display display, Window owner) {
 		super.open(display, owner);
