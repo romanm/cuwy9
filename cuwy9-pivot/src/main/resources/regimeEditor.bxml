@@ -24,14 +24,16 @@
 			</TabPane.tabData>
 			<Border styles="{padding:2}">
 				<ScrollPane bxml:id="sortableScrollPane">
-					<TableView bxml:id="sortableTableView" >
+					<TableView bxml:id="sortableTableView" 
+					styles="{verticalSpacing:1, showHorizontalGridLines:true,
+				horizontalSpacing:1, showVerticalGridLines:true}"
+					>
 						<columns>
-							<TableView.Column name="i" width="48" />
-							<TableView.Column name="a" width="48" />
-							<TableView.Column name="b" width="48" />
-							<TableView.Column name="c" width="48" />
-							<TableView.Column name="d" width="48" />
-							<TableView.Column name="e" width="1*" />
+							<TableView.Column name="drug" width="-1" />
+							<TableView.Column name="dose" width="-1" />
+							<TableView.Column name="app" width="48" />
+							<TableView.Column name="datetime" width="48" />
+							<TableView.Column name="i" width="8" />
 						</columns>
 					</TableView>
 				<!-- 
@@ -74,8 +76,8 @@
 					>
 						<Label text="Accordion" styles="{font:{bold:true}}" />
 						<Accordion >
-							<BoxPane Accordion.headerData="Drug">
-								<Label  text="Drug:"/>
+							<BoxPane bxml:id="edDrug" Accordion.headerData="Drug:">
+								<Label text="Drug:"/>
 								<TextInput bxml:id="drugTextInput" />
 								<PushButton buttonData="Next">
 									<buttonPressListeners>

@@ -10,10 +10,18 @@ import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.wtk.Accordion;
+import org.apache.pivot.wtk.Accordion.PanelSequence;
+import org.apache.pivot.wtk.BoxPane;
+import org.apache.pivot.wtk.Button.DataRenderer;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.SuggestionPopup;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableView.CellRenderer;
+import org.apache.pivot.wtk.TableView.Column;
+import org.apache.pivot.wtk.TableView.HeaderDataRenderer;
+import org.apache.pivot.wtk.TableViewColumnListener;
 import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextInput;
@@ -25,12 +33,14 @@ public class RegimeEditor  extends Window implements Bindable {
 	protected final Log log = LogFactory.getLog(getClass());
 	private TextInput drugTextInput = null;
 	TableView sortableTableView = null;
+	BoxPane edDrug = null;
 
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		log.debug(1);
 		drugTextInput = (TextInput)namespace.get("drugTextInput");
+		edDrug = (BoxPane)namespace.get("edDrug");
 		
 		initTableView(namespace);
 
@@ -62,58 +72,79 @@ public class RegimeEditor  extends Window implements Bindable {
 	}
 	private void initTableView(Map<String, Object> namespace) {
 		sortableTableView = (TableView)namespace.get("sortableTableView");
-		TableViewSelectionListener listener=new TableViewSelectionListener(){
-
-			public void selectedRangeAdded(TableView tableView, int rangeStart,
-					int rangeEnd) {
+		sortableTableView.getTableViewColumnListeners().add(new TableViewColumnListener(){ 
+			public void columnInserted(TableView tableView, int index) {
+				log.debug(1);
+			} 
+			public void columnsRemoved(TableView tableView, int index, Sequence<Column> columns) {
+				log.debug(1);
+			} 
+			public void columnNameChanged(Column column, String previousName) {
+				log.debug(1);
+			} 
+			public void columnHeaderDataChanged(Column column, Object previousHeaderData) {
+				log.debug(1);
+			} 
+			public void columnHeaderDataRendererChanged(Column column, HeaderDataRenderer previousHeaderDataRenderer) {
+				log.debug(1);
+			} 
+			public void columnWidthChanged(Column column, int previousWidth, boolean previousRelative) {
+				log.debug(1);
+			} 
+			public void columnWidthLimitsChanged(Column column, int previousMinimumWidth, int previousMaximumWidth) {
 				log.debug(1);
 			}
-
-			public void selectedRangeRemoved(TableView tableView,
-					int rangeStart, int rangeEnd) {
+			public void columnFilterChanged(Column column, Object previousFilter) {
 				log.debug(1);
-			}
-
-			public void selectedRangesChanged(TableView tableView,
-					Sequence<Span> previousSelectedRanges) {
+			} 
+			public void columnCellRendererChanged(Column column, CellRenderer previousCellRenderer) {
 				log.debug(1);
-			}
-
-			public void selectedRowChanged(TableView tableView,
-					Object previousSelectedRow) {
+			}});
+		
+		sortableTableView.getTableViewSelectionListeners().add(new TableViewSelectionListener(){
+			public void selectedRangeAdded(TableView tableView, int rangeStart, int rangeEnd) {
+				log.debug(1);
+			} 
+			public void selectedRangeRemoved(TableView tableView, int rangeStart, int rangeEnd) {
+				log.debug(1);
+			} 
+			public void selectedRangesChanged(TableView tableView, Sequence<Span> previousSelectedRanges) {
+//				log.debug(1);
+			} 
+			public void selectedRowChanged(TableView tableView, Object previousSelectedRow) {
 				HashMap<String, String> selectedRow = (HashMap<String, String>) tableView.getSelectedRow();
-				String drug = selectedRow.get("a");
+				String drug = selectedRow.get("drug");
 				drugTextInput.setText(drug);
-			}};
-		sortableTableView.getTableViewSelectionListeners().add(listener);
-		sortableTableView.getTableViewRowListeners().add(new TableViewRowListener(){
-
+				Accordion parent = (Accordion) edDrug.getParent();
+				String headerData = (String) parent.getHeaderData(edDrug);
+				log.debug(headerData);
+				Accordion.setHeaderData(edDrug, "Drug: "+drug);
+				edDrug.getDisplay().repaint();
+			}});
+		
+		sortableTableView.getTableViewRowListeners().add(new TableViewRowListener(){ 
 			public void rowInserted(TableView tableView, int index) {
 				log.debug(1);
-			}
-
+			} 
 			public void rowsRemoved(TableView tableView, int index, int count) {
 				log.debug(1);
-			}
-
+			} 
 			public void rowUpdated(TableView tableView, int index) {
 				log.debug(1);
-			}
-
+			} 
 			public void rowsCleared(TableView tableView) {
 				log.debug(1);
-			}
-
+			} 
 			public void rowsSorted(TableView tableView) {
 				log.debug(1);
 			}} );
 		// Set table header data
 		TableView.ColumnSequence columns = this.sortableTableView.getColumns();
-		columns.get(0).setHeaderData(new TableViewHeaderData("#"));
-		columns.get(1).setHeaderData(new TableViewHeaderData("drug"));
-		columns.get(2).setHeaderData(new TableViewHeaderData("dose"));
-		columns.get(3).setHeaderData(new TableViewHeaderData("C"));
-		columns.get(4).setHeaderData(new TableViewHeaderData("D"));
+		columns.get(0).setHeaderData(new TableViewHeaderData("drug"));
+		columns.get(1).setHeaderData(new TableViewHeaderData("dose"));
+		columns.get(2).setHeaderData(new TableViewHeaderData("app"));
+		columns.get(3).setHeaderData(new TableViewHeaderData("datetime"));
+		columns.get(4).setHeaderData(new TableViewHeaderData("#"));
 		ArrayList<Object> tableData = new ArrayList<Object>(10);
 
 		addDrug(tableData, "Dexa", "2 mg");
@@ -123,8 +154,8 @@ public class RegimeEditor  extends Window implements Bindable {
 	}
 	private void addDrug(ArrayList<Object> tableData, String drug, String dose) {
 		HashMap<String, String> tableRow = new HashMap<String, String>();
-		tableRow.put("a", drug);
-		tableRow.put("b", dose);
+		tableRow.put("drug", drug);
+		tableRow.put("dose", dose);
 		tableData.add(tableRow);
 	}
 	public void open(Display display, Window owner) {
