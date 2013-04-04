@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <layout:SimpleTablePanes bxml:id="window" title="Table Panes"
 	maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:layout="org.cuwy9.pivot.layout" 

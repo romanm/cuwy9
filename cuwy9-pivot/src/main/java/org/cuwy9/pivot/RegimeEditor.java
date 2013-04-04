@@ -11,15 +11,20 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Accordion;
-import org.apache.pivot.wtk.Accordion.PanelSequence;
 import org.apache.pivot.wtk.BoxPane;
-import org.apache.pivot.wtk.Button.DataRenderer;
+import org.apache.pivot.wtk.Button;
+import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.ComponentMouseButtonListener;
+import org.apache.pivot.wtk.ComponentMouseListener;
 import org.apache.pivot.wtk.Display;
+import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.SuggestionPopup;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableView.CellRenderer;
 import org.apache.pivot.wtk.TableView.Column;
+import org.apache.pivot.wtk.TableView.ColumnSequence;
 import org.apache.pivot.wtk.TableView.HeaderDataRenderer;
 import org.apache.pivot.wtk.TableViewColumnListener;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -32,8 +37,9 @@ import org.apache.pivot.wtk.content.TableViewHeaderData;
 public class RegimeEditor  extends Window implements Bindable {
 	protected final Log log = LogFactory.getLog(getClass());
 	private TextInput drugTextInput = null;
-	TableView sortableTableView = null;
+	TableView taskTableView = null;
 	BoxPane edDrug = null;
+	private PushButton drugNext=null;
 
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
@@ -41,10 +47,22 @@ public class RegimeEditor  extends Window implements Bindable {
 		log.debug(1);
 		drugTextInput = (TextInput)namespace.get("drugTextInput");
 		edDrug = (BoxPane)namespace.get("edDrug");
-		
+		drugNext = (PushButton)namespace.get("drugNext");
+		taskTableView = (TableView)namespace.get("taskTableView");
+		drugNext.getButtonPressListeners().add(new ButtonPressListener() {
+			public void buttonPressed(Button button) {
+				log.debug(1);
+				HashMap<String, String> selectedRow = (HashMap<String, String>) taskTableView.getSelectedRow();
+				log.debug(selectedRow);
+				String text = drugTextInput.getText();
+				selectedRow.put("drug", text);
+				log.debug(selectedRow);
+				taskTableView.setSelectedRow(selectedRow);
+			}
+		});
 		initTableView(namespace);
 
-		TextInputContentListener.Adapter adapter = new TextInputContentListener.Adapter() {
+		drugTextInput.getTextInputContentListeners().add(new TextInputContentListener.Adapter() {
 			public void textInserted(TextInput textInput, int index, int count) {
 				log.debug(2);
 				String text = textInput.getText();
@@ -65,43 +83,40 @@ public class RegimeEditor  extends Window implements Bindable {
 			public void textRemoved(TextInput textInput, int index, int count) {
 				suggestionPopup.close();
 			}
-		};
-		drugTextInput.getTextInputContentListeners().add(adapter);
+		});
 
 		suggestionPopup.setListSize(4);
 	}
 	private void initTableView(Map<String, Object> namespace) {
-		sortableTableView = (TableView)namespace.get("sortableTableView");
-		sortableTableView.getTableViewColumnListeners().add(new TableViewColumnListener(){ 
-			public void columnInserted(TableView tableView, int index) {
-				log.debug(1);
-			} 
-			public void columnsRemoved(TableView tableView, int index, Sequence<Column> columns) {
-				log.debug(1);
-			} 
-			public void columnNameChanged(Column column, String previousName) {
-				log.debug(1);
-			} 
-			public void columnHeaderDataChanged(Column column, Object previousHeaderData) {
-				log.debug(1);
-			} 
-			public void columnHeaderDataRendererChanged(Column column, HeaderDataRenderer previousHeaderDataRenderer) {
-				log.debug(1);
-			} 
-			public void columnWidthChanged(Column column, int previousWidth, boolean previousRelative) {
-				log.debug(1);
-			} 
-			public void columnWidthLimitsChanged(Column column, int previousMinimumWidth, int previousMaximumWidth) {
-				log.debug(1);
-			}
-			public void columnFilterChanged(Column column, Object previousFilter) {
-				log.debug(1);
-			} 
-			public void columnCellRendererChanged(Column column, CellRenderer previousCellRenderer) {
-				log.debug(1);
-			}});
+		taskTableView.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener(){
 		
-		sortableTableView.getTableViewSelectionListeners().add(new TableViewSelectionListener(){
+			public boolean mouseDown(Component component,
+					org.apache.pivot.wtk.Mouse.Button button, int x, int y) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		
+			public boolean mouseUp(Component component,
+					org.apache.pivot.wtk.Mouse.Button button, int x, int y) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		
+			public boolean mouseClick(Component component,
+					org.apache.pivot.wtk.Mouse.Button button, int x, int y, int count) {
+				int columnAt = taskTableView.getColumnAt(x);
+				int rowAt = taskTableView.getRowAt(y);
+				log.debug(rowAt+"x"+columnAt);
+				log.debug(" x = "+x+" y = "+y+" count = "+count);
+				ColumnSequence columns = taskTableView.getColumns();
+				int length = columns.getLength();
+				log.debug(length);
+				
+				return false;
+			}
+		
+			});
+		taskTableView.getTableViewSelectionListeners().add(new TableViewSelectionListener(){
 			public void selectedRangeAdded(TableView tableView, int rangeStart, int rangeEnd) {
 				log.debug(1);
 			} 
@@ -122,7 +137,7 @@ public class RegimeEditor  extends Window implements Bindable {
 				edDrug.getDisplay().repaint();
 			}});
 		
-		sortableTableView.getTableViewRowListeners().add(new TableViewRowListener(){ 
+		taskTableView.getTableViewRowListeners().add(new TableViewRowListener(){ 
 			public void rowInserted(TableView tableView, int index) {
 				log.debug(1);
 			} 
@@ -139,7 +154,7 @@ public class RegimeEditor  extends Window implements Bindable {
 				log.debug(1);
 			}} );
 		// Set table header data
-		TableView.ColumnSequence columns = this.sortableTableView.getColumns();
+		TableView.ColumnSequence columns = this.taskTableView.getColumns();
 		columns.get(0).setHeaderData(new TableViewHeaderData("drug"));
 		columns.get(1).setHeaderData(new TableViewHeaderData("dose"));
 		columns.get(2).setHeaderData(new TableViewHeaderData("app"));
@@ -149,7 +164,7 @@ public class RegimeEditor  extends Window implements Bindable {
 
 		addDrug(tableData, "Dexa", "2 mg");
 		addDrug(tableData, "NaCl 0.9%", "250 ml");
-		this.sortableTableView.setTableData(tableData);
+		this.taskTableView.setTableData(tableData);
 
 	}
 	private void addDrug(ArrayList<Object> tableData, String drug, String dose) {

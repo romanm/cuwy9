@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <cuwy:RegimeEditor title="Expanders" maximized="true"
 	xmlns:bxml="http://pivot.apache.org/bxml" 
 	xmlns:content="org.apache.pivot.wtk.content"
@@ -24,22 +25,20 @@
 			</TabPane.tabData>
 			<Border styles="{padding:2}">
 				<ScrollPane bxml:id="sortableScrollPane">
-					<TableView bxml:id="sortableTableView" 
-					styles="{verticalSpacing:1, showHorizontalGridLines:true,
-				horizontalSpacing:1, showVerticalGridLines:true}"
+					<TableView bxml:id="taskTableView" 
+					styles="{verticalSpacing:1, showHorizontalGridLines:true, horizontalSpacing:1, showVerticalGridLines:true}"
 					>
 						<columns>
-							<TableView.Column name="drug" width="-1" />
-							<TableView.Column name="dose" width="-1" />
+							<TableView.Column name="drug" width="88" />
+							<TableView.Column name="dose" width="55" />
 							<TableView.Column name="app" width="48" />
 							<TableView.Column name="datetime" width="48" />
 							<TableView.Column name="i" width="8" />
 						</columns>
 					</TableView>
-				<!-- 
-				 -->
+				<!-- -->
 					<columnHeader>
-						<TableViewHeader tableView="$sortableTableView"
+						<TableViewHeader tableView="$taskTableView"
 							sortMode="multi_column" tooltipText="Shift-click to sort on multiple columns" />
 					</columnHeader>
 				</ScrollPane>
@@ -79,7 +78,7 @@
 							<BoxPane bxml:id="edDrug" Accordion.headerData="Drug:">
 								<Label text="Drug:"/>
 								<TextInput bxml:id="drugTextInput" />
-								<PushButton buttonData="Next">
+								<PushButton bxml:id="drugNext" buttonData="Next">
 									<buttonPressListeners>
 										function buttonPressed(button) {
 										var accordion = button.getAncestor("org.apache.pivot.wtk.Accordion");
