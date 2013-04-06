@@ -15,18 +15,16 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.ComponentKeyListener;
 import org.apache.pivot.wtk.ComponentMouseButtonListener;
-import org.apache.pivot.wtk.ComponentMouseListener;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Span;
 import org.apache.pivot.wtk.SuggestionPopup;
 import org.apache.pivot.wtk.TableView;
-import org.apache.pivot.wtk.TableView.CellRenderer;
-import org.apache.pivot.wtk.TableView.Column;
+import org.apache.pivot.wtk.Keyboard.KeyLocation;
 import org.apache.pivot.wtk.TableView.ColumnSequence;
-import org.apache.pivot.wtk.TableView.HeaderDataRenderer;
-import org.apache.pivot.wtk.TableViewColumnListener;
+import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextInput;
@@ -38,8 +36,10 @@ public class RegimeEditor  extends Window implements Bindable {
 	protected final Log log = LogFactory.getLog(getClass());
 	private TextInput drugTextInput = null;
 	TableView taskTableView = null;
-	BoxPane edDrug = null;
+	BoxPane edDrug = null,edDose=null,edApp=null,edDateTime=null;
+	private Accordion edAccordion=null;
 	private PushButton drugNext=null;
+	private int selectedColumn=0;
 
 	private ArrayList<String> states;
 	private SuggestionPopup suggestionPopup = new SuggestionPopup();
@@ -47,6 +47,10 @@ public class RegimeEditor  extends Window implements Bindable {
 		log.debug(1);
 		drugTextInput = (TextInput)namespace.get("drugTextInput");
 		edDrug = (BoxPane)namespace.get("edDrug");
+		edDose = (BoxPane)namespace.get("edDose");
+		edApp = (BoxPane)namespace.get("edApp");
+		edDateTime = (BoxPane)namespace.get("edDateTime");
+		edAccordion = (Accordion)namespace.get("edAccordion");
 		drugNext = (PushButton)namespace.get("drugNext");
 		taskTableView = (TableView)namespace.get("taskTableView");
 		drugNext.getButtonPressListeners().add(new ButtonPressListener() {
@@ -87,9 +91,43 @@ public class RegimeEditor  extends Window implements Bindable {
 
 		suggestionPopup.setListSize(4);
 	}
+	private void openEditor() {
+		edAccordion.setSelectedIndex(selectedColumn);
+	}
 	private void initTableView(Map<String, Object> namespace) {
+		taskTableView.getComponentKeyListeners().add(new ComponentKeyListener() {
+			public boolean keyTyped(Component component, char character) {
+				log.debug(1);
+				return false;
+			}
+			public boolean keyReleased(Component component, int keyCode, KeyLocation keyLocation) {
+				log.debug(1);
+				return false;
+			}
+			public boolean keyPressed(Component component, int keyCode, KeyLocation keyLocation) {
+				int length = taskTableView.getColumns().getLength();
+				log.debug("keyCode="+keyCode
+						+" si="+taskTableView.getSelectedIndex()
+						+" sc="+selectedColumn
+						+" length="+length
+						);
+				switch (keyCode) {
+				case 37://<-
+					if(selectedColumn>0)
+					selectedColumn--;
+					break;
+				case 39://->
+					if(selectedColumn<length)
+						selectedColumn++;
+					break;
+				default:
+					break;
+				}
+				openEditor();
+				return false;
+			}
+		});
 		taskTableView.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener(){
-		
 			public boolean mouseDown(Component component,
 					org.apache.pivot.wtk.Mouse.Button button, int x, int y) {
 				// TODO Auto-generated method stub
@@ -104,17 +142,14 @@ public class RegimeEditor  extends Window implements Bindable {
 		
 			public boolean mouseClick(Component component,
 					org.apache.pivot.wtk.Mouse.Button button, int x, int y, int count) {
-				int columnAt = taskTableView.getColumnAt(x);
+				selectedColumn = taskTableView.getColumnAt(x);
+				openEditor();
 				int rowAt = taskTableView.getRowAt(y);
-				log.debug(rowAt+"x"+columnAt);
-				log.debug(" x = "+x+" y = "+y+" count = "+count);
-				ColumnSequence columns = taskTableView.getColumns();
-				int length = columns.getLength();
-				log.debug(length);
-				
+				log.debug(" x = "+x+" y = "+y+" count = "+count+" r"+rowAt+"c"+selectedColumn);
+				RowEditor rowEditor = taskTableView.getRowEditor();
+				log.debug(rowEditor);
 				return false;
 			}
-		
 			});
 		taskTableView.getTableViewSelectionListeners().add(new TableViewSelectionListener(){
 			public void selectedRangeAdded(TableView tableView, int rangeStart, int rangeEnd) {

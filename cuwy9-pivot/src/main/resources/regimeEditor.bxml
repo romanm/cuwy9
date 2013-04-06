@@ -26,7 +26,7 @@
 			<Border styles="{padding:2}">
 				<ScrollPane bxml:id="sortableScrollPane">
 					<TableView bxml:id="taskTableView" 
-					styles="{verticalSpacing:1, showHorizontalGridLines:true, horizontalSpacing:1, showVerticalGridLines:true}"
+styles="{verticalSpacing:1, showHorizontalGridLines:true, horizontalSpacing:1, showVerticalGridLines:true}"
 					>
 						<columns>
 							<TableView.Column name="drug" width="88" />
@@ -74,7 +74,7 @@
 						styles="{fill:true, padding:{left:2, right:2}}"
 					>
 						<Label text="Accordion" styles="{font:{bold:true}}" />
-						<Accordion >
+						<Accordion bxml:id="edAccordion" >
 							<BoxPane bxml:id="edDrug" Accordion.headerData="Drug:">
 								<Label text="Drug:"/>
 								<TextInput bxml:id="drugTextInput" />
@@ -87,13 +87,18 @@
 									</buttonPressListeners>
 								</PushButton>
 							</BoxPane>
-							<BoxPane Accordion.headerData="dose">
-								<Label  text="dose"/>
+							<BoxPane bxml:id="edDose" Accordion.headerData="dose">
+								<Border styles="{padding:2}">
+									<Label text="dose" />
+								</Border>
+								<Border styles="{padding:4}">
+									<Label text="dose" />
+								</Border>
 							</BoxPane>
-							<BoxPane Accordion.headerData="app">
+							<BoxPane bxml:id="edApp" Accordion.headerData="app">
 								<Label  text="app"/>
 							</BoxPane>
-							<BoxPane Accordion.headerData="DateTime">
+							<BoxPane  bxml:id="edDateTime" Accordion.headerData="DateTime">
 								<Label text="DateTime"/>
 								<Calendar />
 							</BoxPane>
