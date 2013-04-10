@@ -16,8 +16,10 @@
     </properties>
     <modules>
 		<module>cuwy9-core</module>
-		<module>cuwy9-web</module>
 		<module>cuwy9-pivot</module>
+		<module>cuwy9-webdyntreg</module>
+		<module>cuwy9-webhistory</module>
+		<module>cuwy9-webclincon</module>
     </modules>
     <repositories>
         <repository>

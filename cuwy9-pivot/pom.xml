@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.cuwy9.web</groupId>
+	<groupId>org.cuwy9.pivot</groupId>
 	<artifactId>cuwy9-pivot</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<name>cuwy9-pivot</name>
 	<properties>
+        <aspectj.version>1.7.0</aspectj.version>
+        <java.version>1.6</java.version>
 		<pivot.version>2.0.2</pivot.version>
 		<slf4j.version>1.7.2</slf4j.version>
 	</properties>

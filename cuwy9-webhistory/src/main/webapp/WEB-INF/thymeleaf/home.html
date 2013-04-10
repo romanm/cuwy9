@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="thymeleaf/cuwy9layout :: headerFragment"/>
+
+<body class="tundra spring">
+<div id="headline" th:include="thymeleaf/cuwy9layout :: headline">rg:headline</div>
+
+<div id="content">
+Hello home world! ${a1}= <span th:text="${a1}" />"
+<div>
+<a th:href="@{/dbreview}">dbreview</a>
+</div>
+<table width="100%">
+	<tr><th>Therapie Basis</th><th>Patienten behandlung</th></tr>
+	<tr>
+	<td>
+<span th:text="#{global_theme}" />
+	</td>
+	</tr>
+</table>
+</div>
+
+<div id="sidebar">sidebar
+	<p/>
+	<span th:text="#{ui_ddd}" />
+	<a th:href="@{/}">JSP</a>
+	<a th:href="@{/home}">Thymeleaf</a>
+</div>
+
+</body>
+</html>
