@@ -8,13 +8,24 @@
 <div id="content">
 	<div th:each="folderO : ${findAllFolder }" th:text="${folderO}"></div>
 	<hr/>
+	s22
 	<div th:each="taskO : ${findAllTask}" >
 		<h2 th:text="${taskO.taskName}"/>
+			<span th:text="${taskO.id}"/>
+			<span th:text="${taskO.id}"/>
+			a1
 		<div th:each="node : ${taskO.node.childs}" >
+		1
+		s22
+		<!-- 
 			<span th:text="${node.taskDrug.drug.drugname}"/>
 			<span th:text="${node.taskDrug.dose.dosevalue}"/>
 			<span th:text="${node.taskDrug.dose.doseunit}"/>
 			<span th:text="${node.taskDrug.app}"/>
+		 -->
+			<span th:text="${node}"/>
+			<span th:text="${node.taskDrug==null}"/>
+			<span th:text="${node.taskDrug}"/>
 		</div>
 	</div>
 	<hr/>

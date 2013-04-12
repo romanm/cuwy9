@@ -24,8 +24,8 @@ public static void main(String[] args) {
 //	drug("superDrops2", cuwy9service);
 //	drug(Cuwy9Service.genericName, cuwy9service);
 //	taskDrug(cuwy9service);
-	taskDrug2(cuwy9service);
-//	regime(cuwy9service);
+//	taskDrug2(cuwy9service);
+	regime(cuwy9service);
 //	patient(cuwy9service);
 	System.out.println(2);
 }
@@ -50,7 +50,7 @@ private static void taskDrug(Cuwy9Service cuwy9service) {
 	log.debug("fiTaskdrug = "+fiTaskdrug.getTaskDrug());
 }
 private static void patient(Cuwy9Service cuwy9service) {
-	DateTime birthdate = new DateTime().minusYears(25);
+	DateTime birthdate = new DateTime().minusYears(25).withMillisOfDay(0);
 	cuwy9service.fiPatient("fn1", "pn1", "F", birthdate);
 }
 private static void folder(Cuwy9Service cuwy9service) {

@@ -203,7 +203,7 @@
 		      <version>2.0</version>
 		      <configuration>
 		        <server>tomcat-development-server</server>
-		        <port>8080</port>
+		        <port>8081</port>
 		        <path>/cuwy9dyntreg</path>
 		      </configuration>
 		    </plugin> 

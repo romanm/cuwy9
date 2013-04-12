@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="thymeleaf/cuwy9layout :: headerFragment"/>
+
+<body class="tundra spring">
+<div id="headline" th:include="thymeleaf/cuwy9layout :: headline">rg:headline</div>
+
+<div id="content">
+	oo
+	<form th:object="${testFormModel}" action="testformseek"
+		th:action="@{'/testformseek'}" method="get" class="form-horizontal"
+		id="search-owner-form">
+		<fieldset>
+			<div class="control-group" id="lastName">
+				<label class="control-label">Last name </label> <input type="text"
+					th:field="*{seek}" size="30" maxlength="80" /> 
+					<span class="help-inline" th:errors="*{seek}">[Errors]</span>
+			</div>
+			<div class="form-actions">
+				<button type="submit">Find Owner</button>
+			</div>
+		</fieldset>
+	</form>
+	</div>
+<div id="sidebar">sidebar
+</div>
+</body>
+</html>
