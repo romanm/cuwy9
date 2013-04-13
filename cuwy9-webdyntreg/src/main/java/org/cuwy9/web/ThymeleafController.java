@@ -28,20 +28,7 @@ public class ThymeleafController {
 		log.debug(2);
 		return "thymeleaf/home";
 	}
-	@RequestMapping(value = "/testform", method = RequestMethod.GET)
-	public String testform(Model model) {
-		log.debug(1);
-		model.addAttribute("testFormModel", new TestFormModel());
-		log.debug(2);
-		return "thymeleaf/testform";
-	}
-	@RequestMapping(value = "/testformseek", method = RequestMethod.GET)
-    public String processFindForm(TestFormModel testFormModel, BindingResult result, Model model) {
-		log.debug(1);
-		log.debug(testFormModel.getSeek());
-		log.debug(2);
-		return "thymeleaf/testform";
-	}
+	
 	@RequestMapping(value = "/dbreview", method = RequestMethod.GET)
 	public String dbreview(Model model) {
 		log.debug(1);
