@@ -18,8 +18,8 @@ public class TestFormController {
 		log.debug(2);
 		return "thymeleaf/testform";
 	}
-	@RequestMapping(value = "/testformseek", method = RequestMethod.GET)
-    public String processFindForm(TestFormModel testFormModel, BindingResult result, Model model) {
+	@RequestMapping(value = "/testform", method = RequestMethod.POST)
+	public String processFindForm(TestFormModel testFormModel, BindingResult result, Model model) {
 		log.debug(1);
 		log.debug(testFormModel.getSeek());
 		new FormValidator().validate(testFormModel, result);

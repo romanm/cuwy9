@@ -6,9 +6,8 @@
 <div id="headline" th:include="thymeleaf/cuwy9layout :: headline">rg:headline</div>
 
 <div id="content">
-	oo
 	<form th:object="${testFormModel}" action="testformseek"
-		th:action="@{'/testformseek'}" method="get" class="form-horizontal"
+		th:action="@{'/testform'}" method="POST" class="form-horizontal"
 		id="search-owner-form">
 		<fieldset>
 			<div class="control-group" id="lastName">
