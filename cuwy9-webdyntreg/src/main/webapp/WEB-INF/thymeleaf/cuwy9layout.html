@@ -9,6 +9,18 @@
 	<script th:attr="src=@{/resources/spring/Spring.js}" type="text/javascript"/>
 	<script th:attr="src=@{/resources/spring/Spring-Dojo.js}" type="text/javascript"/>
 	<script th:attr="src=@{/resources/js/mopet.js}" type="text/javascript"/>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+		th:src="@{/webjars/jquery/1.9.1/jquery.js}"></script>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
+		th:src="@{/webjars/jquery-ui/1.10.2/ui/jquery-ui.js}"></script>
+	
+	<link
+		href="http://ajax.googleapis.com/ajax/libs/jquery-ui/1.10.2/themes/smoothness/jquery-ui.css"
+		th:href="@{/webjars/jquery-ui/1.10.2/themes/base/jquery.ui.all.css}"
+		rel="stylesheet"></link>
+
 </head>
 <body>
 	<div th:fragment="headline" >

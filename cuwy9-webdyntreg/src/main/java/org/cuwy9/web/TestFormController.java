@@ -22,6 +22,7 @@ public class TestFormController {
 	public String processFindForm(TestFormModel testFormModel, BindingResult result, Model model) {
 		log.debug(1);
 		log.debug(testFormModel.getSeek());
+		log.debug(testFormModel.getBirthDate());
 		new FormValidator().validate(testFormModel, result);
 		log.debug(2);
 		if (result.hasErrors()) {
