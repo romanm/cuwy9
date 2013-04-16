@@ -5,7 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TestFormModel {
 	private String seek;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+//	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private DateTime birthDate;
 
 	public DateTime getBirthDate() {

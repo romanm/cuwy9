@@ -49,14 +49,14 @@ public class Patient extends MtlObject{
 	public static List<Patient> findAllPatient() {
 		return entityManager().createQuery("SELECT o FROM Patient o", Patient.class).getResultList();
 	}
-	@PersistenceContext
-	transient EntityManager entityManager;
-	public static final EntityManager entityManager() {
-		EntityManager em = new Node().entityManager;
-		if (em == null) throw 
-		new IllegalStateException("Entity manager has not been injected (is the Spring " +
-				"Aspects JAR configured as an AJC/AJDT aspects library?)");
-		return em;
-	}
+//	@PersistenceContext
+//	transient EntityManager entityManager;
+//	public static final EntityManager entityManager() {
+//		EntityManager em = new Node().entityManager;
+//		if (em == null) throw 
+//		new IllegalStateException("Entity manager has not been injected (is the Spring " +
+//				"Aspects JAR configured as an AJC/AJDT aspects library?)");
+//		return em;
+//	}
 
 }

@@ -34,13 +34,13 @@ public class Task extends MtlObject{
 	public static List<Task> findAllTask() {
 		return entityManager().createQuery("SELECT o FROM Task o", Task.class).getResultList();
 	}
-	@PersistenceContext
-	transient EntityManager entityManager;
-	public static final EntityManager entityManager() {
-		EntityManager em = new Node().entityManager;
-		if (em == null) throw 
-		new IllegalStateException("Entity manager has not been injected (is the Spring " +
-				"Aspects JAR configured as an AJC/AJDT aspects library?)");
-		return em;
-	}
+//	@PersistenceContext
+//	transient EntityManager entityManager;
+//	public static final EntityManager entityManager() {
+//		EntityManager em = new Node().entityManager;
+//		if (em == null) throw 
+//		new IllegalStateException("Entity manager has not been injected (is the Spring " +
+//				"Aspects JAR configured as an AJC/AJDT aspects library?)");
+//		return em;
+//	}
 }

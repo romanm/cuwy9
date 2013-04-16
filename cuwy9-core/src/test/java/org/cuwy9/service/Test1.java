@@ -1,5 +1,7 @@
 package org.cuwy9.service;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cuwy9.domain.App;
@@ -20,12 +22,14 @@ public static void main(String[] args) {
 	ApplicationContext context = new ClassPathXmlApplicationContext(
 		"classpath:/META-INF/spring/applicationContext*.xml");
 	Cuwy9Service cuwy9service = (Cuwy9Service) context.getBean("cuwy9Service");
+	List<Drug> findAllDrugs = Drug.findAllDrugs();
+	log.debug(findAllDrugs);
 //	folder(cuwy9service);
 //	drug("superDrops2", cuwy9service);
 //	drug(Cuwy9Service.genericName, cuwy9service);
 //	taskDrug(cuwy9service);
 //	taskDrug2(cuwy9service);
-	regime(cuwy9service);
+//	regime(cuwy9service);
 //	patient(cuwy9service);
 	System.out.println(2);
 }

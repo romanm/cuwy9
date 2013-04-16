@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 @Entity
 public class Drug extends MtlObject{
+	public static List<Drug> findAllDrugs() {
+		return entityManager().createQuery("SELECT o FROM Drug o", Drug.class).getResultList();
+	}
 	private Drug() {}
 	public Drug(Node node) {
 		setNode(node);

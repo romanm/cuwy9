@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="thymeleaf/cuwy9layout :: headerFragment"></head>
+
+<body>
+ <script>
+$(function() {
+var availableTags = [
+"ActionScript",
+"AppleScript",
+"Asp",
+"BASIC",
+"C",
+"C++",
+"Clojure",
+"COBOL",
+"ColdFusion",
+"Erlang",
+"Fortran",
+"Groovy",
+"Haskell",
+"Java",
+"JavaScript",
+"Lisp",
+"Perl",
+"PHP",
+"Python",
+"Ruby",
+"Scala",
+"Scheme"
+];
+ var dl=$.ajax({
+	type: "GET",
+	url: "mapping/produces",
+	dataType: "xml",
+	success: function(xml) {
+//		alert($(xml).find("foo").text());
+		//alert(availableTags);
+		availableTags.push($(xml).find("foo").text())
+	}
+});
+$( "#tags" ).autocomplete({
+source: availableTags
+});
+});
+/*
+$.getJSON("http://www.heiaheia.com/voimakaksikko/stats.json?callback=voimakaksikkoStats", function(data){
+    alert(data);
+})
+
+$.get('mapping/produces', function(xml){
+var json = $.xml2json(xml);
+alert(json.foo);
+});
+ */
+
+//alert(dl.children[1]);
+//alert(""+$(dl).find("foo"));
+
+</script>
+
+<div class="ui-widget">
+<label for="tags">Tags: </label>
+<input id="tags" />
+</div>
+<div th:each="drugO : ${findAllDrugs}" th:text="${drugO}"></div>
+</body>
+</html>
